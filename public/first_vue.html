@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <title>Snippet App</title>
 </head>
 <body>
@@ -11,6 +11,10 @@
     <p>{{ message }}</p>
     <p>{{ message2 }}</p>
     <button v-on:click="changeMsg">Change</button>
+    <ul>
+      <li v-for="data in list">{{ data.title }}</li>
+    </ul>
+    <button v-on:click="listSnippet">listSnippet</button>
   </div>
 
   <script>
@@ -19,7 +23,8 @@
       data () {
         return {
           message: "Hello Vue!",
-          message2: "hoge"
+          message2: "hoge",
+          list: [{title: 'title1'}, {title: 'title2'}]
         }
       },
       mounted(){
@@ -30,7 +35,17 @@
           this.message = "Set Message";
         },
         changeMsg: function(){
-          this.message = "Change Message";
+          this.message = "Changed Message"
+          axios.get('/snippets.json')
+          .then(response => (
+            this.message2 = response.data[0]['title']
+          ))
+        },
+        listSnippet:function(){
+          axios.get('/snippets.json')
+          .then(response => (
+            this.list = response.data
+          ))
         }
       }
     })
