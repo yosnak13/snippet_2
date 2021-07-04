@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+  <title>Snippet App</title>
+</head>
+<body>
+  <div id="app">
+    <p>{{ message }}</p>
+    <p>{{ message2 }}</p>
+  </div>
+
+  <script>
+    new Vue({
+      el: "#app",
+      data () {
+        return {
+          message: "Hello Vue!",
+          message2: "hoge"
+        };
+      }
+    });
+  </script>
+</body>
+</html>
