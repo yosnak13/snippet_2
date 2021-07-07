@@ -31,7 +31,7 @@
         </v-flex>
 
         <v-flex xs7>
-          <v-card style="margin:10px" v-for="snippet in snippetList">
+          <v-card style="margin:10px" v-for="snippet in reverseSnippetList">
             <v-card-title primary-title>
               <h3 class="headline">{{ snippet.title }}</h3>
             </v-card-title>
@@ -72,9 +72,10 @@
         }
       },
       computed: {
-        reversesnippetList(){
-          return this.snippetList.slice
-        }
+        // 配列の要素順番を逆順にする
+        reverseSnippetList() {
+          return this.snippetList.slice().reverse();
+        },
       }
     })
 
