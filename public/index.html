@@ -41,7 +41,7 @@
 
             <v-card-actions>
               <v-btn flat color="red" v-on:click="togglePutModal(snippet.id)">Update</v-btn>
-              <v-btn flat color="gray" v-on:click="toggleDeleteModal()">Delete</v-btn>
+              <v-btn flat color="gray" v-on:click="toggleDeleteModal(snippet.id)">Delete</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -128,7 +128,7 @@
 
           <v-card-actions>
             <v-spaver></v-spaver>
-            <v-btn color="red" flat v-on:click="deleteSnippet()">
+            <v-btn color="red" flat v-on:click="deleteSnippet">
               Delete
             </v-btn>
           </v-card-actions>
@@ -202,7 +202,7 @@
           this.dialogPutFlag =! this.dialogPutFlag
         },
         deleteSnippet: function(){
-          axios.delete('/snippet/' + this.id + '.json')
+          axios.delete('/snippets/' + this.id + '.json')
           .then(response => {
             this.listSnippet()
           })
