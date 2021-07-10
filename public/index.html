@@ -154,6 +154,8 @@
           putTitle: '',
           putLanguage: '',
           putContents: '',
+
+          dialogDeleteFlag: false,
         }
       },
       mounted() {
@@ -198,6 +200,17 @@
             this.listSnippet()
           })
           this.dialogPutFlag =! this.dialogPutFlag
+        },
+        deleteSnippet: function(){
+          axios.delete('/snippet/' + this.id + '.json')
+          .then(response => {
+            this.listSnippet()
+          })
+          this.dialogDeleteFlag =! this.dialogDeleteFlag
+        },
+        toggleDeleteModal: function(id) {
+          this.id = id
+          this.dialogDeleteFlag =! this.dialogDeleteFlag
         }
       },
       computed: {
