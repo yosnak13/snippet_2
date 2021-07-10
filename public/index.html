@@ -26,6 +26,11 @@
             <h2>Snippets Shortcut</h2>
             <ul>
               <li>Snippet Title</li>
+              <li v-for="snippet in snippetList">
+                <span id='name' v-on:click="goElem(snippet.id)">
+                  [{{  snippet.language }}] {{ snippet.title }}
+                </span>
+              </li>
             </ul>
           </div>
         </v-flex>
