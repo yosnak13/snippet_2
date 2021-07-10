@@ -47,6 +47,8 @@
             <v-card-actions>
               <v-btn flat color="red" v-on:click="togglePutModal(snippet.id)">Update</v-btn>
               <v-btn flat color="gray" v-on:click="toggleDeleteModal(snippet.id)">Delete</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn flat color="red" v-on:click="goTop">Go Top</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -219,6 +221,9 @@
         },
         goElem: function(id) {
           document.getElementById(id).scrollIntoView(true)
+        },
+        goTop: function() {
+          document.getElementById("app").scrollIntoView(true)
         }
       },
       computed: {
