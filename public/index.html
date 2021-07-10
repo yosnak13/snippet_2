@@ -35,11 +35,15 @@
           </div>
         </v-flex>
 
-        <v-flex xs7>
+        <v-flex xs7 style='margin:10px'>
+          <h2>Search Snippet</h2>
+          <v-text-field v-model="searchWord" v-on:keyup="abstruct" label="Input Keyword" style='margin-top:4px'></v-text-field>
           <v-card style="margin:10px" v-for="snippet in reverseSnippetList">
             <v-card-title primary-title>
-              <a v-bind:id='snippet.id'></a>
-              <h3 class="headline">{{ snippet.title }}</h3>
+              <div style="background-color:#FFCDD2">
+                <a v-bind:id='snippet.id'></a>
+                <h3 class="headline">{{ snippet.title }}</h3>
+              </div>
             </v-card-title>
             <div style="margin:10px 20px">
               <textarea style='width:100%; height:300px; background-color:#efefef; padding:3px'> {{ snippet.contents }} </textarea>
@@ -169,6 +173,8 @@
           putContents: '',
 
           dialogDeleteFlag: false,
+
+          searchWord: ''
         }
       },
       mounted() {
@@ -249,13 +255,17 @@
           if (this.language == 'ALL') {
             this.snippetList = []
             for (i = 0; i < this.allData.length; i++) {
-              this.snippetList.push(this.allData[i])
+              if ((this.allData[i].contents.indexOf(this.searchWord) !== -1) || (this.allData[i].title.indexOf(this.searchWord) !== -1) || (this.allData[i].language.indexOf(this.searchWord) !== -1)) { // 説明 4.7
+                this.snippetList.push(this.allData[i])
+              }
             }
           } else if (this.language != '') {
             this.snippetList = []
             for (i = 0; i < this.allData.length; i++) {
               if (this.allData[i].language == this.language) {
-                this.snippetList.push(this.allData[i])
+                if ((this.allData[i].contents.indexOf(this.searchWord) !== -1) || (this.allData[i].title.indexOf(this.searchWord) !== -1) || (this.allData[i].language.indexOf(this.searchWord) !== -1)) { // 説明 4.7
+                  this.snippetList.push(this.allData[i])
+                }
               }
             }
           }
