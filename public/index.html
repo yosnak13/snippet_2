@@ -23,7 +23,8 @@
 
         <v-flex xs5>
           <div style="margin:10px">
-            <h2>Snippets Shortcut</h2>
+            <h2>Select Language</h2>
+            <v-select v-model='language' :items="languages" label="Language" v-on:change="abstruct"></v-select>
             <ul>
               <li v-for="snippet in reverseSnippetList">
                 <span id='name' v-on:click="goElem(snippet.id)">
@@ -65,6 +66,7 @@
           <v-text-field v-model="postTitle" label="Snippet Title" required style='margin:20px; margin-top:30px'></v-text-field>
           <v-felx>
             <v-text-field v-model="postLanguage" label="Language" required style='margin:20px; margin-bottom:0px; margin-left:20px'></v-text-field>
+            <v-select v-model='postLanguage' :items="languagesForEdit" label="Select from history" style='margin:20px; margin-bottom:0px;margin-left: 0px'></v-select>
           </v-felx>
           <v-card-text>
             <p>Snippet</p>
@@ -152,6 +154,10 @@
         return {
           snippetList: ['',''],
           allData: ['',''],
+          languages: ['ALL'],
+          languagesForEdit: [],
+          language: 'ALL',
+
           dialogPostFlag: false,
           postTitle: '',
           postLanguage: '',
@@ -174,7 +180,21 @@
           .then(response => {
             this.allData = response.data
             this.snippetList = this.allData
+            //selectbox
+            this.listLanguages();
+            this.abstract();
           })
+        },
+        listLanguages: function () {
+          this.languages = []
+          this.languagesForEdit = []
+          this.languages.push('ALL')
+          for (i = 0; i < this.allData.length; i++) {
+            if (this.languages.indexOf(this.allData[i].language) == -1) {
+              this.languages.push(this.allData[i].language)
+              this.languagesForEdit.push(this.allData[i].language)
+            }
+          }
         },
         togglePostModal: function () {
           this.dialogPostFlag = !this.dialogPostFlag
@@ -224,6 +244,21 @@
         },
         goTop: function() {
           document.getElementById("app").scrollIntoView(true)
+        },
+        abstruct: function () {
+          if (this.language == 'ALL') {
+            this.snippetList = []
+            for (i = 0; i < this.allData.length; i++) {
+              this.snippetList.push(this.allData[i])
+            }
+          } else if (this.language != '') {
+            this.snippetList = []
+            for (i = 0; i < this.allData.length; i++) {
+              if (this.allData[i].language == this.language) {
+                this.snippetList.push(this.allData[i])
+              }
+            }
+          }
         }
       },
       computed: {
